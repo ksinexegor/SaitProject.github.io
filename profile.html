@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-header fade-in">
+        <img src="{{ url_for('static', filename='default-avatar.png') }}"
+             class="avatar"
+             alt="Аватар {{ user.username }}">
+        <div class="user-info">
+            <h1>{{ user.username }}</h1>
+            <div class="user-balance">{{ user.balance }} ₽</div>
+        </div>
+    </div>
+
+    <h2>Ваши товары в продаже</h2>
+    <div class="sprites-grid">
+        {% for sprite in sprites %}
+        <div class="sprite-card fade-in">
+            <h3 class="sprite-title">{{ sprite.name }}</h3>
+            <div class="sprite-price">{{ sprite.price }} ₽</div>
+
+            <form method="POST" action="{{ url_for('delete', sprite_id=sprite.id) }}">
+                <button class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                    Удалить
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div class="no-items">
+            <p>Нет активных товаров</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

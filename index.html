@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+<div class="sprites-grid">
+    {% for sprite in sprites %}
+    <div class="sprite-card fade-in">
+        <img src="{{ url_for('static', filename='uploads/' + sprite.image_path) }}"
+             class="sprite-image"
+             alt="{{ sprite.name }}">
+        <div class="sprite-content">
+            <h3 class="sprite-title">{{ sprite.name }}</h3>
+            <div class="sprite-price">{{ sprite.price }} ₽</div>
+            <p class="sprite-desc">{{ sprite.short_description }}</p>
+            <a href="{{ url_for('sprite_detail', sprite_id=sprite.id) }}"
+               class="btn-details">
+                <i class="fas fa-search"></i> Подробнее
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="no-items">
+        <p>😢 Пока нет товаров в продаже</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

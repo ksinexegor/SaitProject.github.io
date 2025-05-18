@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SpriteShope{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-content">
+                <a href="/" class="brand">
+                    <i class="fas fa-ghost"></i>
+                    SpriteShope
+                </a>
+
+                <div class="nav-links">
+                    <a href="{{ url_for('about') }}" class="nav-link">
+                        <i class="fas fa-info-circle"></i>
+                        О сайте
+                    </a>
+                    {% if 'user_id' in session %}
+                        <a href="{{ url_for('profile') }}" class="nav-link">
+                            <i class="fas fa-user"></i>
+                            Профиль
+                        </a>
+                        <a href="{{ url_for('add_item') }}" class="nav-link">
+                            <i class="fas fa-plus"></i>
+                            Продать
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="nav-link">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Выход
+                        </a>
+                    {% else %}
+                        <a href="{{ url_for('register') }}" class="nav-link">
+                            <i class="fas fa-user-plus"></i>
+                            Регистрация
+                        </a>
+                        <a href="{{ url_for('login') }}" class="nav-link">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Вход
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script>
+        setTimeout(() => {
+            document.querySelectorAll('.flash-message').forEach(el => {
+                el.style.display = 'none';
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

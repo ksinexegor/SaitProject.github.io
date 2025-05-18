@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ sprite.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="sprite-detail-container">
+        <div class="sprite-preview">
+            <img src="{{ url_for('static', filename='uploads/' + sprite.image_path) }}"
+                 class="sprite-image"
+                 alt="{{ sprite.name }}">
+        </div>
+
+        <div class="sprite-info">
+            <h1 class="sprite-title">{{ sprite.name }}</h1>
+            <div class="sprite-price">{{ sprite.price }} монет</div>
+
+            <div class="seller-info">
+                <img src="{{ url_for('static', filename='uploads/' + sprite.avatar) }}"
+                     class="seller-avatar"
+                     alt="Аватар {{ sprite.username }}">
+                <div>
+                    <h3>Продавец: {{ sprite.username }}</h3>
+                    <div class="seller-rating">★ ★ ★ ★ ☆ (4.0)</div>
+                </div>
+            </div>
+
+            <div class="sprite-description">
+                <h2>Описание</h2>
+                <p>{{ sprite.long_description }}</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('buy', sprite_id=sprite.id) }}">
+                <button class="btn-primary">
+                    <i class="fas fa-shopping-cart"></i> Купить сейчас
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
